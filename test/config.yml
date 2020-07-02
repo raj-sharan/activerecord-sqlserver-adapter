@@ -1,11 +1,11 @@
 
 default_connection_info: &default_connection_info
   adapter: sqlserver
-  mode: <%= ENV['ARCONN'] || 'dblib' %>
+  mode: <%= ENV['ARCONN'] || 'odbc' %>
   host: <%= ENV['ACTIVERECORD_UNITTEST_HOST'] || 'localhost' %>
   port: <%= ENV['ACTIVERECORD_UNITTEST_PORT'] %>
   database: activerecord_unittest
-  username: <%= ENV['ACTIVERECORD_UNITTEST_USER'] || 'rails' %>
+  username: <%= ENV['ACTIVERECORD_UNITTEST_USER'] || 'sa' %>
   password: <%= ENV['ACTIVERECORD_UNITTEST_PASS'] || '' %>
   collation: <%= ENV['ACTIVERECORD_UNITTEST_COLLATION'] || nil %>
   encoding: utf8
@@ -28,4 +28,12 @@ connections:
       tds_version: <%= ENV['ACTIVERECORD_UNITTEST_TDSVERSION'] %>
       azure: <%= !ENV['ACTIVERECORD_UNITTEST_AZURE'].nil? %>
       timeout: <%= ENV['ACTIVERECORD_UNITTEST_AZURE'].present? ? 20 : 10 %>
+  odbc:
+      arunit:
+        <<: *default_connection_info
+        dsn: <%= ENV['ACTIVERECORD_UNITTEST_DSN'] || 'activerecord_unittest' %>
+      arunit2:
+        <<: *default_connection_info
+        database: activerecord_unittest2
+        dsn: <%= ENV['ACTIVERECORD_UNITTEST2_DSN'] || 'activerecord_unittest2' %>
 
